@@ -1,0 +1,106 @@
+
+pip install virtualenv
+
+will install the virtualenv command
+
+jangvir/Scripts/activate activates the virtual environment called "jangvir" (provided that this is what you named your virtual environment)
+ in windows PC. The syntax is NameOfVirtualEnvironment/Scripts/activate. While on Linux/Mac, you activate it with
+ source jangvir/Scripts/activate.
+ 
+ To turn it off, just type "deactivate" without the quotes.
+ 
+ install django with pip install django
+ 
+ The command  'django-admin startproject mysite' without the quotes creates a new project folder called 'mysite'
+ After the new folder is creaated, it will have many subfolders including a file in the root directly called manage.py
+ 
+ To view what is happening, use the code 'python manage.py runserver' 
+ 
+ //some of the results is that
+ Starting development server at http://127.0.0.1:8000/. Copy and paste that link on the browser to see your development.
+ You will be welcomed with a screen saying 'The install worked successfully! Congratulations!'
+ 
+ We need to migrate the database because django has it's own database it is using. We will use the code:
+ 'python manage.py migrate'
+ 
+ If you get a response, Quit the Server with Ctrl+Break, just use Ctrl+C on Windows
+ 
+ In order to create a webapp called 'website' within our 'mysite' folder, we user
+ python manage.py startapp website
+ This will create a new folder called "website" in the mysite project folder. Notice the commands 'startproject' and 'startapp'
+ 
+ You need to tell django you just installed an app called 'website'. This is done by going to your project folder in a code editor (controlling the app, in this case 'mysite',
+ click settings, then scroll down to installed apps and add name of your folder to the list, in this case 'website' - dont forget to add single quotes and comma).
+ 
+ By default, there is no url.py file in the 'website' folder, you need to create one. You can actually copy and paste the one in the 'mysite' folder and deleting these lines:
+ from django.contrib import admin
+ path('admin/', admin.site.urls),
+ 
+ We need to let django know that we now have a new urls file in the app folder i.e 'website', so we include the following code inside the original 'mysite' urls folder
+
+			from django.contrib import admin
+			from django.urls import path, include (the only thing you added on this line is 'include')
+
+			urlpatterns = [
+				path('admin/', admin.site.urls),
+				path('', include('website.urls')), (then you added this line too - '' means root)
+			]
+
+In order to build the real 'website' i.e the major project, we need a 'templates' folder within the 'website' directory. Then inside the templates directory, name it
+'anything.html'
+
+You can add whatever you want in the html document e.g <h1>Hello everyone</h1>. The go and add the url of this file ie 'anything.html' to the 'website' urls.py file with:
+
+from django.urls import path
+from . import views     // . here means from this directory, import views
+
+urlpatterns = [
+    path('', views.home, name="home"),
+]
+
+
+then go into the views.py in the 'website' directory to add the following code to it so you can view your website:
+
+from django.shortcuts import render
+
+# Create your views here.
+
+def home(request):
+    return render (request, 'home.html', {})
+
+The next thing to do to view is to type 'python manage.py runserver' In your terminal then hit enter, then refresh your browser
+because if you refresh your browser alone, it will not work.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
